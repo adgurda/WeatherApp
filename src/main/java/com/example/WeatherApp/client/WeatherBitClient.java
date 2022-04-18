@@ -31,7 +31,7 @@ public class WeatherBitClient {
                 CityInfo.FORTALEZA_LON.getCoord(), APP_KEY);
     }
 
-    public String getWeatherLemarne() {
+    public String getWeatherLemorne() {
         return restTemplate.getForObject(WEATHER_URL + "lat={lat}&lon={lon}&key={key}", String.class,
                 CityInfo.LE_MORNE_LAT.getCoord(),
                 CityInfo.LE_MORNE_LON.getCoord(), APP_KEY);

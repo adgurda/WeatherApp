@@ -37,7 +37,7 @@ public class WeatherController {
 
     @GetMapping("/weather/Lemorne")
     ResponseEntity<String> getWeatherLemarne() {
-        weatherBitClient.getWeatherLemarne();
+        weatherBitClient.getWeatherLemorne();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
