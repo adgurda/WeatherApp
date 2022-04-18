@@ -14,8 +14,8 @@ public enum CityInfo {
     PISSOURI_LON("32.701"),
     PISSOURI_LAT("34.669"),
 
-    LE_MARNE_LON("57.328"),
-    LE_MARNE_LAT("-20.445");
+    LE_MORNE_LON("57.328"),
+    LE_MORNE_LAT("-20.445");
 
     private String coord;
 

@@ -33,8 +33,8 @@ public class WeatherBitClient {
 
     public String getWeatherLemarne() {
         return restTemplate.getForObject(WEATHER_URL + "lat={lat}&lon={lon}&key={key}", String.class,
-                CityInfo.LE_MARNE_LAT.getCoord(),
-                CityInfo.LE_MARNE_LON.getCoord(), APP_KEY);
+                CityInfo.LE_MORNE_LAT.getCoord(),
+                CityInfo.LE_MORNE_LON.getCoord(), APP_KEY);
     }
 
     public String getWeatherPissouri() {
