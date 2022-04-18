@@ -17,9 +17,34 @@ public class WeatherController {
     }
 
 
-    @GetMapping("/weather")
-    ResponseEntity<String> getWeather(){
-        weatherBitClient.getWeather();
+    @GetMapping("/weather/Jastarnia")
+    ResponseEntity<String> getWeatherJastarnia(){
+        weatherBitClient.getWeatherJastarnia();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/weather/Bridgetown")
+    ResponseEntity<String> getWeatherBridgetown(){
+        weatherBitClient.getWeatherBridgetown();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/weather/Fortaleza")
+    ResponseEntity<String> getWeatherFortaleza(){
+        weatherBitClient.getWeatherFortaleza();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/weather/Lemarne")
+    ResponseEntity<String> getWeatherLemarne(){
+        weatherBitClient.getWeatherLemarne();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/weather/Pissouri")
+    ResponseEntity<String> getWeatherPissouri(){
+        weatherBitClient.getWeatherPissouri();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
