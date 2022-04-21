@@ -1,11 +1,13 @@
 package com.example.WeatherApp.controller;
 
+import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.client.WeatherBitClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WeatherController {
@@ -16,34 +18,9 @@ public class WeatherController {
         this.weatherBitClient = weatherBitClient;
     }
 
-
-    @GetMapping("/weather/Jastarnia")
-    ResponseEntity<String> getWeatherJastarnia() {
-        weatherBitClient.getWeatherJastarnia();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/weather/Bridgetown")
-    ResponseEntity<String> getWeatherBridgetown() {
-        weatherBitClient.getWeatherBridgetown();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/weather/Fortaleza")
-    ResponseEntity<String> getWeatherFortaleza() {
-        weatherBitClient.getWeatherFortaleza();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/weather/Lemorne")
-    ResponseEntity<String> getWeatherLemarne() {
-        weatherBitClient.getWeatherLemorne();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/weather/Pissouri")
-    ResponseEntity<String> getWeatherPissouri() {
-        weatherBitClient.getWeatherPissouri();
+    @GetMapping("/weather")
+    ResponseEntity<String> getWeather(@RequestParam City city) {
+        weatherBitClient.getWeather(City.valueOf(city.getName()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
