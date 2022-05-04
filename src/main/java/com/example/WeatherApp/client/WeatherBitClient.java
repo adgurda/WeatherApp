@@ -3,6 +3,7 @@ package com.example.WeatherApp.client;
 import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.dto.WeatherBitDto;
 import com.example.WeatherApp.dto.WeatherDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,7 +26,8 @@ public class WeatherBitClient implements WeatherClient {
         String weatherBitDto = restTemplate.getForObject(
                 host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
                 city.getLat(), city.getLon(), apiKey);
-        return mapper.objectMapper.convertValue(weatherBitDto, WeatherDto.class)
+        WeatherDto weatherDto = mapper.objectMapper.readValue(weatherBitDto, WeatherDto.class);
+        return weatherDto.;
     }
 
 }
