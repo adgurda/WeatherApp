@@ -22,12 +22,12 @@ public class WeatherBitClient implements WeatherClient {
     }
 
     @Override
-    public String getWeather(City city) {
+    public String getWeather(City city) throws JsonProcessingException {
         String weatherBitDto = restTemplate.getForObject(
                 host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
                 city.getLat(), city.getLon(), apiKey);
         WeatherDto weatherDto = mapper.objectMapper.readValue(weatherBitDto, WeatherDto.class);
-        return weatherDto.;
+        return weatherDto;
     }
 
 }
