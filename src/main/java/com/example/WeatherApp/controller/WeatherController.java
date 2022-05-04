@@ -2,6 +2,7 @@ package com.example.WeatherApp.controller;
 
 import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.client.WeatherBitClient;
+import com.example.WeatherApp.client.WeatherClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WeatherController {
-    private final WeatherBitClient weatherBitClient;
+    private final WeatherClient weatherClient;
 
     @Autowired
-    public WeatherController(WeatherBitClient weatherBitClient) {
-        this.weatherBitClient = weatherBitClient;
+    public WeatherController(WeatherClient weatherClient) {
+        this.weatherClient = weatherClient;
     }
 
     @GetMapping("/weather")
-    ResponseEntity<String> getWeather(@RequestParam City city) {
-        weatherBitClient.getWeather(City.valueOf(city.getName()));
-        return new ResponseEntity<>(HttpStatus.OK);
+    ResponseEntity<String> getWeather(@RequestParam("cityName") String city) {
+        String weather = weatherClient.getWeather(City.valueOf(city.toUpperCase())); // TODO zmien stringa na typ DTO
+        return new ResponseEntity<>(weather, HttpStatus.OK);
     }
 
 }

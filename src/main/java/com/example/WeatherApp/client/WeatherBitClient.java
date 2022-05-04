@@ -1,18 +1,24 @@
 package com.example.WeatherApp.client;
 
 import com.example.WeatherApp.cities.City;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-@Component
-public class WeatherBitClient {
-    private RestTemplate restTemplate = new RestTemplate();
-    private static final String WEATHER_URL = "http://api.weatherbit.io/v2.0/forecast/daily?";
-    private static final String APP_KEY = "5a3dfd7b3d8f4afc8e7af78e824064f4";
+public class WeatherBitClient implements WeatherClient {
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    private final String host;
+    private final String apiKey;
+
+    public WeatherBitClient(String host, String apiKey) {
+        this.host = host;
+        this.apiKey = apiKey;
+    }
+
+    @Override
     public String getWeather(City city) {
-        return restTemplate.getForObject(WEATHER_URL + "lat={lat}&lon={lon}&key={key}", String.class,
-                city.getLat(), city.getLon(), APP_KEY);
+        return restTemplate.getForObject(host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
+                city.getLat(), city.getLon(), apiKey);
     }
 
 }

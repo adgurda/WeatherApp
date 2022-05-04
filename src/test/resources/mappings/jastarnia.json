@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/v2.0/forecast/daily?lat=54.695&lon=8.678&key=testKey"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "jastarnia-body.json",
+    "headers": {
+      "Content-Type": "text/plain"
+    }
+  }
+}
