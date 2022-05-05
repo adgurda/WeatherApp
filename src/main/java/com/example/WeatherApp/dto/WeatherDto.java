@@ -1,5 +1,5 @@
 package com.example.WeatherApp.dto;
-@Builder
+
 public class WeatherDto {
     private String name;
     private float temperature;
