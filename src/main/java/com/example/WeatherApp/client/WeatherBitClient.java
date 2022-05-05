@@ -21,6 +21,7 @@ public class WeatherBitClient implements WeatherClient {
 
     @Override
     public WeatherDto getWeather(City city) throws JsonProcessingException {
+
         String weatherBitDto = restTemplate.getForObject(
                 host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
                 city.getLat(), city.getLon(), apiKey);
