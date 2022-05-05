@@ -5,7 +5,7 @@ import com.example.WeatherApp.dto.WeatherDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-@Service
+
 public class WeatherBitClient implements WeatherClient {
 
     private final RestTemplate restTemplate = new RestTemplate();
