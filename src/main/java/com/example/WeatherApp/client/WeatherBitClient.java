@@ -1,31 +1,34 @@
 package com.example.WeatherApp.client;
 
 import com.example.WeatherApp.cities.City;
-import com.example.WeatherApp.dto.WeatherDto;
+import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
 
 public class WeatherBitClient implements WeatherClient {
-
     private final RestTemplate restTemplate = new RestTemplate();
-    private final Mapper mapper = new Mapper();
-
     private final String host;
     private final String apiKey;
+    private final ObjectMapper mapper;
 
-    public WeatherBitClient(String host, String apiKey) {
+    public WeatherBitClient(String host, String apiKey, ObjectMapper mapper) {
         this.host = host;
         this.apiKey = apiKey;
+        this.mapper = mapper;
     }
 
     @Override
-    public WeatherDto getWeather(City city) throws JsonProcessingException {
-
-        String weatherBitDto = restTemplate.getForObject(
+    public WeatherForecastDto getWeather(City city) {
+        String weather = restTemplate.getForObject(
                 host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
                 city.getLat(), city.getLon(), apiKey);
-        WeatherDto weatherDto = mapper.objectMapper.readValue(weatherBitDto, WeatherDto.class);
+        WeatherForecastDto weatherDto = null;
+        try {
+            weatherDto = mapper.readValue(weather, WeatherForecastDto.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return weatherDto;
     }
 
