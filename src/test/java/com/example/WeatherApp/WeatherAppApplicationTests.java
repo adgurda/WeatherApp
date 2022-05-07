@@ -34,7 +34,7 @@ class WeatherAppApplicationTests extends IntegrationTest {
 				.getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
 		
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
-		assertThat(response.getBody()).isEqualTo("Jastarnia");
+		assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
 
 	}
 }

@@ -8,10 +8,14 @@ import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastDto {
-    public final String cityName;
+    private final String cityName;
 
     public WeatherForecastDto(@JsonProperty("city_name") String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 
     @Override
