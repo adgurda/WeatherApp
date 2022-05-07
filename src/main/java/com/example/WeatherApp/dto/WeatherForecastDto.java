@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastDto {
-    private final String cityName;
+    public final String cityName;
 
     public WeatherForecastDto(@JsonProperty("city_name") String cityName) {
         this.cityName = cityName;
