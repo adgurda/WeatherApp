@@ -1,5 +1,6 @@
 package com.example.WeatherApp;
 
+import com.example.WeatherApp.dto.WeatherForecastDataDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.assertj.core.api.Assertions;
@@ -14,6 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.atIndex;
+import static org.assertj.core.api.InstanceOfAssertFactories.DOUBLE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -34,7 +37,9 @@ class WeatherAppApplicationTests extends IntegrationTest {
 				.getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
 		
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
-		assertThat(response.getBody()).isEqualTo("Jastarnia");
+		assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
+		assertThat(response.getBody().getWeatherForecastDataDto().get(0)).isEqualTo(10.2);
+		;
 
 	}
 }
