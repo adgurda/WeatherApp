@@ -4,6 +4,7 @@ import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.client.WeatherBitClient;
 import com.example.WeatherApp.client.WeatherClient;
 import com.example.WeatherApp.dto.WeatherForecastDto;
+import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,12 @@ public class WeatherController {
     }
 
     @GetMapping("/weather")
-    ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityName") String city) {
+    ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityName") String city) throws MappingException {
         WeatherForecastDto weather = null; // TODO zmien stringa na typ DTO
         try {
             weather = weatherClient.getWeather(City.valueOf(city.toUpperCase()));
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new MappingException("Invalid serialization / deserialization");
         }
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }
