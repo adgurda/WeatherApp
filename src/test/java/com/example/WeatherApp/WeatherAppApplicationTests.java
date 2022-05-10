@@ -40,7 +40,7 @@ class WeatherAppApplicationTests extends IntegrationTest {
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
 		assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
 		assertThat(response.getBody().getWeatherForecastDataDto()).
-				contains(new WeatherForecastDataDto(10.2F, "2022-05-06", 2.5F));
+				containsExactly(new WeatherForecastDataDto(10.2F, "2022-05-06", 2.5F));
 	}
 
 	@Test
@@ -48,14 +48,6 @@ class WeatherAppApplicationTests extends IntegrationTest {
 		ResponseEntity<WeatherForecastDto> response = restTemplate
 				.getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
 		assertThat(response.getStatusCodeValue()).isEqualTo(400);
-	}
-
-	@Test
-	void should_throw_execption_when_parsing_to_json() {
-		ResponseEntity<WeatherForecastDto> response = restTemplate
-				.getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
-		assertThatThrownBy(() -> new WeatherForecastDataDto(-10.4F, "byleco", 12.2F))
-				.isInstanceOf(MappingException.class).hasMessage("Problem with parsing / generating JSON");
 	}
 
 }
