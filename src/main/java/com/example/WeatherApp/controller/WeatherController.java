@@ -31,7 +31,7 @@ public class WeatherController {
         try {
             weather = weatherClient.getWeather(City.valueOf(city.toUpperCase()));
         } catch (JsonProcessingException e) {
-            throw new MappingException("Invalid serialization / deserialization");
+            throw new MappingException("Problem with parsing / generating JSON");
         }
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }

@@ -28,7 +28,7 @@ public class WeatherBitClient implements WeatherClient {
         try {
             weatherDto = mapper.readValue(weather, WeatherForecastDto.class);
         } catch (JsonProcessingException e) {
-            throw new MappingException("Invalid serialization / deserialization");
+            throw new MappingException("Problem with parsing / generating JSON");
         }
         return weatherDto;
     }

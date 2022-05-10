@@ -2,8 +2,10 @@ package com.example.WeatherApp;
 
 import com.example.WeatherApp.dto.WeatherForecastDataDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
+import com.example.WeatherApp.exception.MappingException;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.atIndex;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.DOUBLE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,10 +44,18 @@ class WeatherAppApplicationTests extends IntegrationTest {
 	}
 
 	@Test
-	void should_return_bad_reqquest_when_cityName_is_blanc() {
+	void should_return_bad_request_when_cityName_is_blanc() {
 		ResponseEntity<WeatherForecastDto> response = restTemplate
 				.getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
 		assertThat(response.getStatusCodeValue()).isEqualTo(400);
+	}
+
+	@Test
+	void should_throw_execption_when_parsing_to_json() {
+		ResponseEntity<WeatherForecastDto> response = restTemplate
+				.getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
+		assertThatThrownBy(() -> new WeatherForecastDataDto(-10.4F, "byleco", 12.2F))
+				.isInstanceOf(MappingException.class).hasMessage("Problem with parsing / generating JSON");
 	}
 
 }
