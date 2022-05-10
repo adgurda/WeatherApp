@@ -38,8 +38,15 @@ class WeatherAppApplicationTests extends IntegrationTest {
 		
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
 		assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
-		assertThat(response.getBody().getWeatherForecastDataDto().get(0)).isEqualTo(10.2);
-		;
-
+		assertThat(response.getBody().getWeatherForecastDataDto()).
+				contains(new WeatherForecastDataDto(10.2F, "2022-05-06", 2.5F));
 	}
+
+	@Test
+	void should_return_bad_reqquest_when_cityName_is_blanc() {
+		ResponseEntity<WeatherForecastDto> response = restTemplate
+				.getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
+		assertThat(response.getStatusCodeValue()).isEqualTo(400);
+	}
+
 }

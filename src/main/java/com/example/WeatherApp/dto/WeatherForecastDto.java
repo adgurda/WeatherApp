@@ -9,8 +9,8 @@ import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastDto {
-    private final String cityName;
-    private final List<WeatherForecastDataDto> weatherForecastDataDto;
+    public final String cityName;
+    public final List<WeatherForecastDataDto> weatherForecastDataDto;
 
     public WeatherForecastDto(@JsonProperty("city_name") String cityName,
                               @JsonProperty("data")List<WeatherForecastDataDto> weatherForecastDataDto) {

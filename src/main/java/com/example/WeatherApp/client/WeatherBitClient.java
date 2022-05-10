@@ -2,6 +2,7 @@ package com.example.WeatherApp.client;
 
 import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.dto.WeatherForecastDto;
+import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +20,7 @@ public class WeatherBitClient implements WeatherClient {
     }
 
     @Override
-    public WeatherForecastDto getWeather(City city) {
+    public WeatherForecastDto getWeather(City city) throws MappingException {
         String weather = restTemplate.getForObject(
                 host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
                 city.getLat(), city.getLon(), apiKey);
@@ -27,7 +28,7 @@ public class WeatherBitClient implements WeatherClient {
         try {
             weatherDto = mapper.readValue(weather, WeatherForecastDto.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new MappingException("Invalid serialization / deserialization");
         }
         return weatherDto;
     }

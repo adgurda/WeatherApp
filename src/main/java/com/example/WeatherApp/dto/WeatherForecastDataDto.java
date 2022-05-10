@@ -3,15 +3,13 @@ package com.example.WeatherApp.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastDataDto {
-    private final float temperature;
-    private final String date;
-    private final float windSpeed;
+    public final float temperature;
+    public final String date;
+    public final float windSpeed;
 
     public WeatherForecastDataDto(
             @JsonProperty("temp") float temperature,
