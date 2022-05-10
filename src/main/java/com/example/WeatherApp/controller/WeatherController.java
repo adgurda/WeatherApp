@@ -24,7 +24,10 @@ public class WeatherController {
 
     @GetMapping("/weather")
     ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityName") String city) throws MappingException {
-        WeatherForecastDto weather = null; // TODO zmien stringa na typ DTO
+        WeatherForecastDto weather = null;
+        if(city.isBlank() || city.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try {
             weather = weatherClient.getWeather(City.valueOf(city.toUpperCase()));
         } catch (JsonProcessingException e) {
