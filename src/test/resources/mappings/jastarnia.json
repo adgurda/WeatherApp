@@ -5,7 +5,7 @@
   },
   "response": {
     "status": 200,
-    "bodyFileName": "jastarnia-body.json",
+    "bodyFileName": "jastarnia-body-short.json",
     "headers": {
       "Content-Type": "text/plain"
     }

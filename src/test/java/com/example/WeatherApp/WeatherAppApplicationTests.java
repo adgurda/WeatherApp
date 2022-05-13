@@ -1,11 +1,7 @@
 package com.example.WeatherApp;
 
-import com.example.WeatherApp.dto.WeatherForecastDataDto;
+import com.example.WeatherApp.dto.DailyWeatherForecastDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
-import com.example.WeatherApp.exception.MappingException;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,10 +10,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.InstanceOfAssertFactories.DOUBLE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -38,9 +33,9 @@ class WeatherAppApplicationTests extends IntegrationTest {
 				.getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
 		
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
-		assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
-		assertThat(response.getBody().getWeatherForecastDataDto()).
-				containsExactly(new WeatherForecastDataDto(10.2F, "2022-05-06", 2.5F));
+		assertThat(response.getBody().cityName).isEqualTo("Jastarnia");
+		assertThat(response.getBody().dailyWeatherForecastDto).
+				containsExactly(new DailyWeatherForecastDto(10.2F, LocalDate.parse("2022-05-06"), 2.5F));
 	}
 
 	@Test
@@ -49,5 +44,11 @@ class WeatherAppApplicationTests extends IntegrationTest {
 				.getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
 		assertThat(response.getStatusCodeValue()).isEqualTo(400);
 	}
+
+	//TODO 1.weatherbit odpowiada bledem (500)?
+	//TODO 2.uzupełnić dto o nowe pola ktore beda potrzebne (mail)
+	//TODO 3.stowrzyc endpoint zgodny ze specyfikacja w mail (przyjmuje date)
+	//TODO 4.zwrocic dane pogodowe w danym dniu w Jastarnia (cityname, temperature, windSpeed)
+	//TODO 5.wyciagnac z danego dnia inromacje o pogodzie (stream)
 
 }

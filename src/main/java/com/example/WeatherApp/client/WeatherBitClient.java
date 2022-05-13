@@ -5,6 +5,7 @@ import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 public class WeatherBitClient implements WeatherClient {
