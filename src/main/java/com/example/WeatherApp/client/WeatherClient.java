@@ -8,4 +8,5 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public interface WeatherClient {
 
     WeatherForecastDto getWeather(City city) throws JsonProcessingException, MappingException;
+
 }

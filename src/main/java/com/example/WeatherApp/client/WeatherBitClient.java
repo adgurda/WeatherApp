@@ -34,4 +34,5 @@ public class WeatherBitClient implements WeatherClient {
         return weatherDto;
     }
 
+
 }

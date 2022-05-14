@@ -4,8 +4,10 @@ package com.example.WeatherApp.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastDto {
@@ -16,6 +18,12 @@ public class WeatherForecastDto {
                               @JsonProperty("data")List<DailyWeatherForecastDto> dailyWeatherForecastDto) {
         this.cityName = cityName;
         this.dailyWeatherForecastDto = dailyWeatherForecastDto;
+    }
+
+    public Optional<DailyWeatherForecastDto> getDailyForecast(LocalDate date){
+        return dailyWeatherForecastDto.stream()
+                .filter(dailyForecast -> dailyForecast.date.equals(date))
+                .findAny();
     }
 
     @Override

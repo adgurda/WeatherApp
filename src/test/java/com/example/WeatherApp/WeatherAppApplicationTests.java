@@ -35,7 +35,13 @@ class WeatherAppApplicationTests extends IntegrationTest {
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
 		assertThat(response.getBody().cityName).isEqualTo("Jastarnia");
 		assertThat(response.getBody().dailyWeatherForecastDto).
-				containsExactly(new DailyWeatherForecastDto(10.2F, LocalDate.parse("2022-05-06"), 2.5F));
+				containsExactly(new DailyWeatherForecastDto(
+						10.2F,
+						LocalDate.parse("2022-05-06"),
+						2.5F,
+						11.2F,
+						5.7F)
+				);
 	}
 
 	@Test
@@ -49,6 +55,6 @@ class WeatherAppApplicationTests extends IntegrationTest {
 	//TODO 2.uzupełnić dto o nowe pola ktore beda potrzebne (mail)
 	//TODO 3.stowrzyc endpoint zgodny ze specyfikacja w mail (przyjmuje date)
 	//TODO 4.zwrocic dane pogodowe w danym dniu w Jastarnia (cityname, temperature, windSpeed)
-	//TODO 5.wyciagnac z danego dnia inromacje o pogodzie (stream)
+	//TODO 5.wyciagnac z danego dnia informacje o pogodzie (stream)
 
 }

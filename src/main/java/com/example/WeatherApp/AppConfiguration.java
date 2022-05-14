@@ -17,7 +17,7 @@ public class AppConfiguration {
 
     @Bean
     public WeatherClient weatherClient(@Value("${weatherbit.client.host}") String host,
-                                       @Value("${weatherbit.client.apikey}") String apiKey,
+                                       @Value("5a3dfd7b3d8f4afc8e7af78e824064f4") String apiKey,
                                        ObjectMapper mapper) {
         return new WeatherBitClient(host, apiKey, mapper);
     }

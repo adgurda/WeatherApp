@@ -3,6 +3,7 @@ package com.example.WeatherApp.controller;
 import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.client.WeatherBitClient;
 import com.example.WeatherApp.client.WeatherClient;
+import com.example.WeatherApp.dto.DailyWeatherForecastDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +23,8 @@ public class WeatherController {
         this.weatherClient = weatherClient;;
     }
 
+
+
     @GetMapping("/weather")
     ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityName") String city) throws MappingException {
         WeatherForecastDto weather = null;
@@ -34,6 +37,15 @@ public class WeatherController {
             throw new MappingException("Problem with parsing / generating JSON");
         }
         return new ResponseEntity<>(weather, HttpStatus.OK);
+    }
+
+    public WeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto){
+        return new WeatherResponse(
+                dailyWeatherForecastDto.temperature,
+                dailyWeatherForecastDto.date,
+                dailyWeatherForecastDto.windSpeed,
+                dailyWeatherForecastDto.maxTemperature,
+                dailyWeatherForecastDto.minTemperature);
     }
 
 }
