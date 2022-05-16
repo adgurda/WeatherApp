@@ -1,6 +1,7 @@
 package com.example.WeatherApp.client;
 
 import com.example.WeatherApp.cities.City;
+import com.example.WeatherApp.controller.WeatherResponse;
 import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,12 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+
 public class WeatherBitClient implements WeatherClient {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String host;
     private final String apiKey;
     private final ObjectMapper mapper;
-
     public WeatherBitClient(String host, String apiKey, ObjectMapper mapper) {
         this.host = host;
         this.apiKey = apiKey;
@@ -34,5 +36,8 @@ public class WeatherBitClient implements WeatherClient {
         return weatherDto;
     }
 
-
+    @Override
+    public WeatherResponse getForecastByDate(City city, LocalDate date) throws JsonProcessingException {
+        return null;
+    }
 }

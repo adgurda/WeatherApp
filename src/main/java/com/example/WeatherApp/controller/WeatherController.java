@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+
 @Controller
 public class WeatherController {
     private final WeatherClient weatherClient;
@@ -22,9 +24,6 @@ public class WeatherController {
     public WeatherController(WeatherClient weatherClient) {
         this.weatherClient = weatherClient;;
     }
-
-
-
     @GetMapping("/weather")
     ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityName") String city) throws MappingException {
         WeatherForecastDto weather = null;
@@ -37,6 +36,11 @@ public class WeatherController {
             throw new MappingException("Problem with parsing / generating JSON");
         }
         return new ResponseEntity<>(weather, HttpStatus.OK);
+    }
+
+    @GetMapping("/daily-weather")
+    ResponseEntity<WeatherResponse> getDailyWeather(@RequestParam("date") LocalDate date ){
+        return null;
     }
 
     public WeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto){

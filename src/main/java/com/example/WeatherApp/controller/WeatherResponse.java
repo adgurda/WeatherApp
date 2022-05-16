@@ -18,26 +18,22 @@ public class WeatherResponse {
         this.minTemperature = minTemperature;
     }
 
+
     public float getTemperature() {
         return temperature;
     }
-
     public LocalDate getDate() {
         return date;
     }
-
     public float getWindSpeed() {
         return windSpeed;
     }
-
     public float getMaxTemperature() {
         return maxTemperature;
     }
-
     public float getMinTemperature() {
         return minTemperature;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
