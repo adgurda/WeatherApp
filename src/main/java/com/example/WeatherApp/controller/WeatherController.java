@@ -38,9 +38,18 @@ public class WeatherController {
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }
 
-    @GetMapping("/daily-weather")
-    ResponseEntity<WeatherResponse> getDailyWeather(@RequestParam("date") LocalDate date ){
-        return null;
+    @GetMapping("/daily/weather")
+    ResponseEntity<WeatherResponse> getDailyWeather(
+            @RequestParam("date") LocalDate date,
+            @RequestParam("cityName") String city) throws MappingException{
+        DailyWeatherForecastDto weather = null;
+        try {
+            weather = weatherClient.getDailyForecast(City.valueOf(city.toUpperCase()), date);
+        } catch (JsonProcessingException e) {
+            throw new MappingException("Problem with parsing / generating JSON");
+        }
+    return new ResponseEntity<>(toWeatherResponse(weather), HttpStatus.OK);
+
     }
 
     public WeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto){
