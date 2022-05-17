@@ -6,6 +6,7 @@ import com.example.WeatherApp.client.WeatherClient;
 import com.example.WeatherApp.dto.DailyWeatherForecastDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,11 +42,11 @@ public class WeatherController {
 
     @GetMapping("/daily-weather")
     ResponseEntity<WeatherResponse> getDailyWeather(
-            @RequestParam("date") LocalDate date,
+            @RequestParam("date") String date,
             @RequestParam("cityName") String city) throws MappingException{
         List<DailyWeatherForecastDto> weather = null;
         try {
-            weather = weatherClient.getDailyForecast(City.valueOf(city.toUpperCase()), date);
+            weather = weatherClient.getDailyForecast(City.valueOf(city.toUpperCase()), LocalDate.parse(date));
         } catch (JsonProcessingException e) {
             throw new MappingException("Problem with parsing / generating JSON");
         }
