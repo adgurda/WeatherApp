@@ -46,7 +46,9 @@ public class WeatherBitClient implements WeatherClient {
         var result =  mapper.readValue(weather, DailyWeatherForecastDto.class);
         List<DailyWeatherForecastDto> dailyWeather = null;
         dailyWeather.add(result);
-        dailyWeather.stream().filter(forecast -> forecast.date.isEqual(date)).collect(Collectors.toList());
-        return dailyWeather;
+        return dailyWeather
+                .stream()
+                .filter(forecast -> forecast.date.isEqual(date)).collect(Collectors.toList());
     }
 }
+
