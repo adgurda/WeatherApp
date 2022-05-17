@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class WeatherController {
@@ -38,17 +39,17 @@ public class WeatherController {
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }
 
-    @GetMapping("/daily/weather")
+    @GetMapping("/daily-weather")
     ResponseEntity<WeatherResponse> getDailyWeather(
             @RequestParam("date") LocalDate date,
             @RequestParam("cityName") String city) throws MappingException{
-        DailyWeatherForecastDto weather = null;
+        List<DailyWeatherForecastDto> weather = null;
         try {
             weather = weatherClient.getDailyForecast(City.valueOf(city.toUpperCase()), date);
         } catch (JsonProcessingException e) {
             throw new MappingException("Problem with parsing / generating JSON");
         }
-    return new ResponseEntity<>(toWeatherResponse(weather), HttpStatus.OK);
+    return new ResponseEntity<>(toWeatherResponse((DailyWeatherForecastDto) weather), HttpStatus.OK);
 
     }
 
