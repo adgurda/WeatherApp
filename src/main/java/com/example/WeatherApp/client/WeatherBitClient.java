@@ -6,10 +6,12 @@ import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.lang.Nullable;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WeatherBitClient implements WeatherClient {
@@ -44,11 +46,11 @@ public class WeatherBitClient implements WeatherClient {
                 host + "/v2.0/forecast/daily?lat={lat}&lon={lon}&key={key}", String.class,
                 city.getLat(), city.getLon(), apiKey);
         var result =  mapper.readValue(weather, DailyWeatherForecastDto.class);
-        List<DailyWeatherForecastDto> dailyWeather = null;
-        dailyWeather.add(result);
+        List<DailyWeatherForecastDto> dailyWeather = List.of(result);
         return dailyWeather
                 .stream()
-                .filter(forecast -> forecast.date.isEqual(date)).collect(Collectors.toList());
+                .filter(f -> f.date.equals(date))
+                .collect(Collectors.toList());
     }
 }
 
