@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/v2.0/forecast/daily?lat=54.695&lon=8.678&key=testKey"
+    "url": "/v2.0/forecast/daily?lat=54.695&lon=8.678&key=5a3dfd7b3d8f4afc8e7af78e824064f4"
   },
   "response": {
     "status": 200,

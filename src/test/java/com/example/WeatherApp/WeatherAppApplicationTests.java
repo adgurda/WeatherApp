@@ -1,5 +1,6 @@
 package com.example.WeatherApp;
 
+import com.example.WeatherApp.controller.WeatherResponse;
 import com.example.WeatherApp.dto.DailyWeatherForecastDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,15 @@ class WeatherAppApplicationTests extends IntegrationTest {
 		ResponseEntity<WeatherForecastDto> response = restTemplate
 				.getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
 		assertThat(response.getStatusCodeValue()).isEqualTo(400);
+	}
+
+	@Test
+	void should_return_daily_weather_by_cityName(){
+		ResponseEntity<WeatherResponse> response = restTemplate
+				.getForEntity("http://localhost:" + port + "/daily-weather?date=2022-05-06&cityName=Jastarnia",
+						WeatherResponse.class);
+
+		assertThat(response.getStatusCodeValue()).isEqualTo(200);
 	}
 
 	//TODO 1.weatherbit odpowiada bledem (500)?

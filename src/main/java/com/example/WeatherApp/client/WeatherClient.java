@@ -7,11 +7,11 @@ import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
 
 public interface WeatherClient {
 
     WeatherForecastDto getWeather(City city) throws JsonProcessingException, MappingException;
-    List<DailyWeatherForecastDto> getDailyForecast (City city, LocalDate date) throws JsonProcessingException, MappingException;
+    WeatherForecastDto getDailyForecast (City city, LocalDate date) throws JsonProcessingException, MappingException;
 
 }

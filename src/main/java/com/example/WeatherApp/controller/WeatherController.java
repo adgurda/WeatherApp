@@ -1,12 +1,9 @@
 package com.example.WeatherApp.controller;
 
 import com.example.WeatherApp.cities.City;
-import com.example.WeatherApp.client.WeatherBitClient;
 import com.example.WeatherApp.client.WeatherClient;
-import com.example.WeatherApp.dto.DailyWeatherForecastDto;
 import com.example.WeatherApp.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class WeatherController {
@@ -24,7 +22,7 @@ public class WeatherController {
 
     @Autowired
     public WeatherController(WeatherClient weatherClient) {
-        this.weatherClient = weatherClient;;
+        this.weatherClient = weatherClient;
     }
     @GetMapping("/weather")
     ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityName") String city) throws MappingException {
@@ -44,23 +42,33 @@ public class WeatherController {
     ResponseEntity<WeatherResponse> getDailyWeather(
             @RequestParam("date") String date,
             @RequestParam("cityName") String city) throws MappingException{
-        List<DailyWeatherForecastDto> weather = null;
+        WeatherForecastDto weather = null;
         try {
             weather = weatherClient.getDailyForecast(City.valueOf(city.toUpperCase()), LocalDate.parse(date));
         } catch (JsonProcessingException e) {
             throw new MappingException("Problem with parsing / generating JSON");
         }
-    return new ResponseEntity<>(toWeatherResponse((DailyWeatherForecastDto) weather), HttpStatus.OK);
+    return new ResponseEntity<>(toWeatherResponse(weather), HttpStatus.OK);
 
     }
 
-    public WeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto){
-        return new WeatherResponse(
-                dailyWeatherForecastDto.temperature,
-                dailyWeatherForecastDto.date,
-                dailyWeatherForecastDto.windSpeed,
-                dailyWeatherForecastDto.maxTemperature,
-                dailyWeatherForecastDto.minTemperature);
+    private WeatherResponse toWeatherResponse (WeatherForecastDto weatherForecastDto){
+        WeatherResponse weatherDaily = weatherForecastDto.dailyWeatherForecastDto
+                .stream()
+                .map(weatherDaily -> new WeatherResponse(weatherForecastDto.cityName, ))
+        /*
+        WeatherResponse weatherResponse = (WeatherResponse) weatherForecastDto.dailyWeatherForecastDto
+                .stream()
+                .map(daily -> new WeatherResponse(
+                        daily.temperature,
+                        daily.date,
+                        daily.windSpeed,
+                        daily.maxTemperature,
+                        daily.minTemperature));
+        return weatherResponse;
+
+         */
+
     }
 
 }

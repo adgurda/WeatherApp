@@ -1,60 +1,47 @@
 package com.example.WeatherApp.controller;
 
+import com.example.WeatherApp.dto.DailyWeatherForecastDto;
+
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class WeatherResponse {
-    private final float temperature;
-    private final LocalDate date;
-    private final float windSpeed;
-    private final float maxTemperature;
-    private final float minTemperature;
+    private final String cityName;
+    private final List<DailyWeatherForecastDto> weatherForecastDtos;
 
-    public WeatherResponse(float temperature, LocalDate date, float windSpeed, float maxTemperature, float minTemperature) {
-        this.temperature = temperature;
-        this.date = date;
-        this.windSpeed = windSpeed;
-        this.maxTemperature = maxTemperature;
-        this.minTemperature = minTemperature;
+    public WeatherResponse(String cityName, List<DailyWeatherForecastDto> weatherForecastDtos) {
+        this.cityName = cityName;
+        this.weatherForecastDtos = weatherForecastDtos;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
 
-    public float getTemperature() {
-        return temperature;
+    public List<DailyWeatherForecastDto> getWeatherForecastDtos() {
+        return weatherForecastDtos;
     }
-    public LocalDate getDate() {
-        return date;
-    }
-    public float getWindSpeed() {
-        return windSpeed;
-    }
-    public float getMaxTemperature() {
-        return maxTemperature;
-    }
-    public float getMinTemperature() {
-        return minTemperature;
-    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WeatherResponse that = (WeatherResponse) o;
-        return Float.compare(that.temperature, temperature) == 0 && Float.compare(that.windSpeed, windSpeed) == 0 && Float.compare(that.maxTemperature, maxTemperature) == 0 && Float.compare(that.minTemperature, minTemperature) == 0 && Objects.equals(date, that.date);
+        return Objects.equals(cityName, that.cityName) && Objects.equals(weatherForecastDtos, that.weatherForecastDtos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(temperature, date, windSpeed, maxTemperature, minTemperature);
+        return Objects.hash(cityName, weatherForecastDtos);
     }
 
     @Override
     public String toString() {
         return "WeatherResponse{" +
-                "temperature=" + temperature +
-                ", date=" + date +
-                ", windSpeed=" + windSpeed +
-                ", maxTemperature=" + maxTemperature +
-                ", minTemperature=" + minTemperature +
+                "cityName='" + cityName + '\'' +
+                ", weatherForecastDtos=" + weatherForecastDtos +
                 '}';
     }
 }

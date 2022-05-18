@@ -8,8 +8,8 @@ import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.example.WeatherApp.cities.City.JASTARNIA;
 
@@ -23,7 +23,7 @@ public class WeatherBitClientStub implements WeatherClient {
     }
 
     @Override
-    public List<DailyWeatherForecastDto> getDailyForecast(City city, LocalDate date) throws JsonProcessingException, MappingException {
+    public WeatherForecastDto getDailyForecast(City city, LocalDate date) throws JsonProcessingException, MappingException {
         return null;
     }
 }
