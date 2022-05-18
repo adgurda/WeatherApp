@@ -55,7 +55,12 @@ public class WeatherController {
     private WeatherResponse toWeatherResponse (WeatherForecastDto weatherForecastDto){
         WeatherResponse weatherDaily = weatherForecastDto.dailyWeatherForecastDto
                 .stream()
-                .map(weatherDaily -> new WeatherResponse(weatherForecastDto.cityName, ))
+                .map(daily -> new WeatherResponse(weatherForecastDto.cityName,
+                        daily.date,
+                        daily.maxTemperature,
+                        daily.windSpeed,
+                        daily.temperature,
+                        daily.minTemperature));
         /*
         WeatherResponse weatherResponse = (WeatherResponse) weatherForecastDto.dailyWeatherForecastDto
                 .stream()
