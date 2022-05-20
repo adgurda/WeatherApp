@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class WeatherController {
@@ -51,8 +52,17 @@ public class WeatherController {
 
     }
 
-    private WeatherResponse toWeatherResponse (WeatherForecastDto weatherForecastDto{
-
+    private WeatherResponse toWeatherResponse (WeatherForecastDto weatherForecastDto){
+        List<WeatherResponse.DailyWeatherResponse> weatherResponse = weatherForecastDto.dailyWeatherForecastDto
+                .stream()
+                .map(daily -> new WeatherResponse.DailyWeatherResponse(
+                        daily.temperature,
+                        daily.date,
+                        daily.windSpeed,
+                        daily.maxTemperature,
+                        daily.minTemperature
+                )).collect(Collectors.toList());
+        return new WeatherResponse(weatherForecastDto.cityName, weatherResponse);
         /*
         WeatherResponse weatherDaily = weatherForecastDto.dailyWeatherForecastDto
                 .stream()

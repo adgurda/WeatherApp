@@ -5,9 +5,9 @@ import java.util.List;
 
 public class WeatherResponse {
     private final String cityName;
-    private final List<DailyForecastResponse> dailyForecastResponse;
+    private final List<DailyWeatherResponse> dailyForecastResponse;
 
-    public WeatherResponse(String cityName, List<DailyForecastResponse> dailyForecastResponse) {
+    public WeatherResponse(String cityName, List<DailyWeatherResponse> dailyForecastResponse) {
         this.cityName = cityName;
         this.dailyForecastResponse = dailyForecastResponse;
     }
@@ -16,7 +16,7 @@ public class WeatherResponse {
         return cityName;
     }
 
-    public List<DailyForecastResponse> getDailyForecastResponse() {
+    public List<DailyWeatherResponse> getDailyForecastResponse() {
         return dailyForecastResponse;
     }
 
