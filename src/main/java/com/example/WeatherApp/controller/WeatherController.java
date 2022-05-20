@@ -2,7 +2,7 @@ package com.example.WeatherApp.controller;
 
 import com.example.WeatherApp.cities.City;
 import com.example.WeatherApp.client.WeatherClient;
-import com.example.WeatherApp.dto.WeatherForecastDto;
+import com.example.WeatherApp.controller.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class WeatherController {
@@ -52,7 +51,9 @@ public class WeatherController {
 
     }
 
-    private WeatherResponse toWeatherResponse (WeatherForecastDto weatherForecastDto){
+    private WeatherResponse toWeatherResponse (WeatherForecastDto weatherForecastDto{
+
+        /*
         WeatherResponse weatherDaily = weatherForecastDto.dailyWeatherForecastDto
                 .stream()
                 .map(daily -> new WeatherResponse(weatherForecastDto.cityName,
@@ -61,6 +62,8 @@ public class WeatherController {
                         daily.windSpeed,
                         daily.temperature,
                         daily.minTemperature));
+
+         */
         /*
         WeatherResponse weatherResponse = (WeatherResponse) weatherForecastDto.dailyWeatherForecastDto
                 .stream()

@@ -1,8 +1,8 @@
 package com.example.WeatherApp;
 
 import com.example.WeatherApp.controller.WeatherResponse;
-import com.example.WeatherApp.dto.DailyWeatherForecastDto;
-import com.example.WeatherApp.dto.WeatherForecastDto;
+import com.example.WeatherApp.controller.dto.DailyWeatherForecastDto;
+import com.example.WeatherApp.controller.dto.WeatherForecastDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

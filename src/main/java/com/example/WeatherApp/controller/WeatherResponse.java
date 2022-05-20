@@ -1,47 +1,63 @@
 package com.example.WeatherApp.controller;
 
-import com.example.WeatherApp.dto.DailyWeatherForecastDto;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 public class WeatherResponse {
     private final String cityName;
-    private final List<DailyWeatherForecastDto> weatherForecastDtos;
+    private final List<DailyForecastResponse> dailyForecastResponse;
 
-    public WeatherResponse(String cityName, List<DailyWeatherForecastDto> weatherForecastDtos) {
+    public WeatherResponse(String cityName, List<DailyForecastResponse> dailyForecastResponse) {
         this.cityName = cityName;
-        this.weatherForecastDtos = weatherForecastDtos;
+        this.dailyForecastResponse = dailyForecastResponse;
     }
 
     public String getCityName() {
         return cityName;
     }
 
-    public List<DailyWeatherForecastDto> getWeatherForecastDtos() {
-        return weatherForecastDtos;
+    public List<DailyForecastResponse> getDailyForecastResponse() {
+        return dailyForecastResponse;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WeatherResponse that = (WeatherResponse) o;
-        return Objects.equals(cityName, that.cityName) && Objects.equals(weatherForecastDtos, that.weatherForecastDtos);
-    }
+    public static class DailyWeatherResponse{
+        private final float temperature;
+        private final LocalDate date;
+        private final float windSpeed;
+        private final float maxTemperature;
+        private final float minTemperature;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(cityName, weatherForecastDtos);
-    }
+        public DailyWeatherResponse(
+                float temperature,
+                LocalDate date,
+                float windSpeed,
+                float maxTemperature,
+                float minTemperature) {
+            this.temperature = temperature;
+            this.date = date;
+            this.windSpeed = windSpeed;
+            this.maxTemperature = maxTemperature;
+            this.minTemperature = minTemperature;
+        }
 
-    @Override
-    public String toString() {
-        return "WeatherResponse{" +
-                "cityName='" + cityName + '\'' +
-                ", weatherForecastDtos=" + weatherForecastDtos +
-                '}';
+        public float getTemperature() {
+            return temperature;
+        }
+
+        public LocalDate getDate() {
+            return date;
+        }
+
+        public float getWindSpeed() {
+            return windSpeed;
+        }
+
+        public float getMaxTemperature() {
+            return maxTemperature;
+        }
+
+        public float getMinTemperature() {
+            return minTemperature;
+        }
     }
 }

@@ -1,15 +1,13 @@
 package com.example.WeatherApp.client;
 
 import com.example.WeatherApp.cities.City;
-import com.example.WeatherApp.dto.DailyWeatherForecastDto;
-import com.example.WeatherApp.dto.WeatherForecastDto;
+import com.example.WeatherApp.controller.dto.WeatherForecastDto;
 import com.example.WeatherApp.exception.MappingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 public class WeatherBitClient implements WeatherClient {
     private final RestTemplate restTemplate = new RestTemplate();
