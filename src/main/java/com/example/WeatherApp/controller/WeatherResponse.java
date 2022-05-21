@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class WeatherResponse {
-    private final String cityName;
-    private final List<DailyWeatherResponse> dailyForecastResponse;
+    public final String cityName;
+    public final List<DailyWeatherResponse> dailyForecastResponse;
 
     public WeatherResponse(String cityName, List<DailyWeatherResponse> dailyForecastResponse) {
         this.cityName = cityName;
@@ -16,16 +16,17 @@ public class WeatherResponse {
         return cityName;
     }
 
+
     public List<DailyWeatherResponse> getDailyForecastResponse() {
         return dailyForecastResponse;
     }
 
     public static class DailyWeatherResponse{
-        private final float temperature;
-        private final LocalDate date;
-        private final float windSpeed;
-        private final float maxTemperature;
-        private final float minTemperature;
+        public final float temperature;
+        public final LocalDate date;
+        public final float windSpeed;
+        public final float maxTemperature;
+        public final float minTemperature;
 
         public DailyWeatherResponse(
                 float temperature,
