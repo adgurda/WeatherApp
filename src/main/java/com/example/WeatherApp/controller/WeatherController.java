@@ -85,10 +85,9 @@ public class WeatherController {
     }
 
     private DailyWeatherForecastDto getWeatherForDate(WeatherForecastDto weatherForecastDto, LocalDate date) {
-        DailyWeatherForecastDto dailyWeatherForecastDto = weatherForecastDto.dailyWeatherForecastDto
+        return weatherForecastDto.dailyWeatherForecastDto
                 .stream()
-                .filter(daily -> daily.date.equals(date)).findFirst().orElseThrow();
-        return dailyWeatherForecastDto;
+                .filter(daily -> daily.date.equals(date)).findFirst().get();
     }
 
 }

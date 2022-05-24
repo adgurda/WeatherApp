@@ -1,10 +1,11 @@
 package com.example.WeatherApp.controller;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyWeatherResponse {
     private final String cityName;
     private final float temperature;

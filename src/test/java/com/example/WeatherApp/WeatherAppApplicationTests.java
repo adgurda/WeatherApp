@@ -62,7 +62,7 @@ class WeatherAppApplicationTests extends IntegrationTest {
     @Test
     void return_daily_daily_weather_by_cityName_and_date() {
         ResponseEntity<DailyWeatherResponse> response = restTemplate
-                .getForEntity("http://localhost:" + port + "/daily-weather?date=2022-05-21&cityName=Jastarnia",
+                .getForEntity("http://localhost:" + port + "/daily-weather?date=2022-05-24&cityName=Jastarnia",
                         DailyWeatherResponse.class);
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
     }
