@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,7 +74,16 @@ public class WeatherController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        // czy w getWeatherForDate zmienic typ na Liste ?
+        DailyWeatherForecastDto getWeatherByDate = getWeatherForDate(weathers.get(0), localDate);
+        /*
+        weathers.stream().filter(weatherForecastDto -> weatherForecastDto.dailyWeatherForecastDto
+                .stream().max());
+
+         */
+        // te argumenty w response sa totalnie beznadziejne ale postman zwrocil poprawna odpowiedz (pelna prognoze pogody)
+        return new ResponseEntity<>(toWeatherResponse(getWeatherByDate, weathers.get(0).cityName), HttpStatus.OK);
     }
 
     private DailyWeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto, String cityName){
