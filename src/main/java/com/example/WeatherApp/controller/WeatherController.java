@@ -74,16 +74,9 @@ public class WeatherController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        // czy w getWeatherForDate zmienic typ na Liste ?
-        DailyWeatherForecastDto getWeatherByDate = getWeatherForDate(weathers.get(0), localDate);
-        /*
-        weathers.stream().filter(weatherForecastDto -> weatherForecastDto.dailyWeatherForecastDto
-                .stream().max());
-
-         */
-        // te argumenty w response sa totalnie beznadziejne ale postman zwrocil poprawna odpowiedz (pelna prognoze pogody)
-        return new ResponseEntity<>(toWeatherResponse(getWeatherByDate, weathers.get(0).cityName), HttpStatus.OK);
+        weathers = weathers.stream().filter(weather -> weather.dailyWeatherForecastDto
+                .stream().max(Comparator.comparing(DailyWeatherForecastDto::getWindSpeed));D
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private DailyWeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto, String cityName){

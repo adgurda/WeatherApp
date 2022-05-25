@@ -35,6 +35,26 @@ public class DailyWeatherForecastDto {
         return Float.compare(that.temperature, temperature) == 0 && Float.compare(that.windSpeed, windSpeed) == 0 && Objects.equals(date, that.date);
     }
 
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public float getWindSpeed() {
+        return windSpeed;
+    }
+
+    public float getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public float getMinTemperature() {
+        return minTemperature;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(temperature, date, windSpeed);
