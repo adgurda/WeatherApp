@@ -1,11 +1,11 @@
 {
   "request": {
     "method": "GET",
-    "url": "/v2.0/forecast/daily?lat=54.695&lon=8.678&key=5a3dfd7b3d8f4afc8e7af78e824064f4"
+    "url": "/v2.0/forecast/daily?lat=13.103&lon=-59.603&key=5a3dfd7b3d8f4afc8e7af78e824064f4"
   },
   "response": {
     "status": 200,
-    "bodyFileName": "jastarnia-body-short.json",
+    "bodyFileName": "bridgetown-body.json",
     "headers": {
       "Content-Type": "text/plain"
     }

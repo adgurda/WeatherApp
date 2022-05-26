@@ -2,11 +2,10 @@ package com.example.WeatherApp;
 
 import com.example.WeatherApp.client.WeatherBitClient;
 import com.example.WeatherApp.client.WeatherClient;
-import com.example.WeatherApp.dto.WeatherForecastDataDto;
+import com.example.WeatherApp.controller.WeatherResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +18,8 @@ public class AppConfiguration {
 
     @Bean
     public WeatherClient weatherClient(@Value("${weatherbit.client.host}") String host,
-                                       @Value("${weatherbit.client.apikey}") String apiKey,
-                                       @Autowired ObjectMapper mapper) {
+                                       @Value("5a3dfd7b3d8f4afc8e7af78e824064f4") String apiKey,
+                                       ObjectMapper mapper) {
         return new WeatherBitClient(host, apiKey, mapper);
     }
 

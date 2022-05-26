@@ -1,9 +1,9 @@
 package com.example.WeatherApp;
 
-import com.example.WeatherApp.dto.WeatherForecastDataDto;
-import com.example.WeatherApp.dto.WeatherForecastDto;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import org.assertj.core.api.Assertions;
+import com.example.WeatherApp.controller.DailyWeatherResponse;
+import com.example.WeatherApp.controller.WeatherResponse;
+import com.example.WeatherApp.controller.dto.DailyWeatherForecastDto;
+import com.example.WeatherApp.controller.dto.WeatherForecastDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,41 +12,64 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.atIndex;
-import static org.assertj.core.api.InstanceOfAssertFactories.DOUBLE;
+import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class WeatherAppApplicationTests extends IntegrationTest {
-	@Autowired
-	TestRestTemplate restTemplate;
+    @Autowired
+    TestRestTemplate restTemplate;
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    private int port;
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
-	@Test
-	void shouldReturnWeather() {
-		ResponseEntity<WeatherForecastDto> response = restTemplate
-				.getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
-		
-		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
-		assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
-		assertThat(response.getBody().getWeatherForecastDataDto()).
-				contains(new WeatherForecastDataDto(10.2F, "2022-05-06", 2.5F));
-	}
+    @Test
+    void shouldReturnWeather() {
+        ResponseEntity<WeatherForecastDto> response = restTemplate
+                .getForEntity("http://localhost:" + port + "/weather?cityName=Jastarnia", WeatherForecastDto.class);
 
-	@Test
-	void should_return_bad_reqquest_when_cityName_is_blanc() {
-		ResponseEntity<WeatherForecastDto> response = restTemplate
-				.getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
-		assertThat(response.getStatusCodeValue()).isEqualTo(400);
-	}
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody().cityName).isEqualTo("Jastarnia");
+        assertThat(response.getBody().dailyWeatherForecastDto).
+                containsExactly(new DailyWeatherForecastDto(
+                        10.2F,
+                        LocalDate.parse("2022-05-06"),
+                        2.5F,
+                        11.2F,
+                        5.7F)
+                );
+    }
+
+    @Test
+    void should_return_bad_request_when_cityName_is_blanc() {
+        ResponseEntity<WeatherForecastDto> response = restTemplate
+                .getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
+        assertThat(response.getStatusCodeValue()).isEqualTo(400);
+    }
+
+    //TODO 1.weatherbit odpowiada bledem (500)?
+    //TODO 2.uzupełnić dto o nowe pola ktore beda potrzebne (mail)
+    //TODO 3.stowrzyc endpoint zgodny ze specyfikacja w mail (przyjmuje date)
+    //TODO 4.zwrocic dane pogodowe w danym dniu w Jastarnia (cityname, temperature, windSpeed)
+    //TODO 5.wyciagnac z danego dnia informacje o pogodzie (stream)
+
+    @Test
+    void return_daily_daily_weather_by_cityName_and_date() {
+        ResponseEntity<DailyWeatherResponse> response = restTemplate
+                .getForEntity("http://localhost:" + port + "/daily-weather?date=2022-05-21&cityName=Jastarnia",
+                        DailyWeatherResponse.class);
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
+        assertThat(response.getBody().getMaxTemperature()).isEqualTo(11.2F);
+        assertThat(response.getBody().getMinTemperature()).isEqualTo(5.7F);
+        assertThat(response.getBody().getTemperature()).isEqualTo(10.2F);
+        assertThat(response.getBody().getWindSpeed()).isEqualTo(2.5F);
+    }
 
 }
