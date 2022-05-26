@@ -74,9 +74,16 @@ public class WeatherController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        weathers = weathers.stream().filter(weather -> weather.dailyWeatherForecastDto
-                .stream().max(Comparator.comparing(DailyWeatherForecastDto::getWindSpeed));D
-        return new ResponseEntity<>(HttpStatus.OK);
+
+
+        weathers.forEach(element -> element.dailyWeatherForecastDto
+                .forEach(daily -> ));
+
+        DailyWeatherForecastDto getWeatherByDate = getWeatherForDate(weathers.get(4), localDate);
+
+
+
+        return new ResponseEntity<>(toWeatherResponse(getWeatherByDate, weathers.get(4).cityName), HttpStatus.OK);
     }
 
     private DailyWeatherResponse toWeatherResponse (DailyWeatherForecastDto dailyWeatherForecastDto, String cityName){
@@ -95,6 +102,13 @@ public class WeatherController {
                 .filter(daily -> daily.date.equals(date)).findFirst().orElseThrow();
 
         return dailyWeatherForecastDto;
+    }
+
+    private DailyWeatherForecastDto getBestWeatherForDate(List<DailyWeatherForecastDto> weathers){
+
+        return weathers
+                .stream()
+                .max(Comparator.comparing(DailyWeatherForecastDto::getWindSpeed)).orElseThrow();
     }
 
 }
