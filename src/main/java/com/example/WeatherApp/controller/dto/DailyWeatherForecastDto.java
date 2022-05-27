@@ -9,6 +9,7 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyWeatherForecastDto {
     public final float temperature;
+
     public final LocalDate date;
     public final float windSpeed;
     public final float maxTemperature;
