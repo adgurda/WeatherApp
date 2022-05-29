@@ -70,7 +70,6 @@ class WeatherAppApplicationTests extends IntegrationTest {
         assertThat(response.getBody().maxTemperature).isEqualTo(11.2F);
         assertThat(response.getBody().windSpeed).isEqualTo(2.5F);
         //działa
-
     }
 
 }
