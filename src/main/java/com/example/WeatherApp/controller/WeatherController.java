@@ -47,9 +47,9 @@ public class WeatherController {
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }
 
-    /*
+
     @GetMapping("/daily-weather")
-    ResponseEntity<DailyWeatherResponse> getDailyWeather(
+    ResponseEntity<WeatherForGivenDay> getDailyWeather(
             @RequestParam("date") String date,
             @RequestParam("cityName") String city) throws MappingException {
         LocalDate localDate = LocalDate.parse(date);
@@ -59,12 +59,11 @@ public class WeatherController {
         } catch (JsonProcessingException e) {
             throw new MappingException("Problem with parsing / generating JSON");
         }
-        DailyWeatherForecastDto dailyWeatherForecastDto = getWeatherForDate(weather, localDate);
-        return new ResponseEntity<>(toWeatherResponse(dailyWeatherForecastDto, city), HttpStatus.OK);
-
+        WeatherForGivenDay weatherForGivenDay = getWeatherForDate(weather, localDate);
+        return new ResponseEntity<>(weatherForGivenDay, HttpStatus.OK);
     }
 
-     */
+
 
     @GetMapping("/best-weather")
     ResponseEntity<WeatherForGivenDay> bestWeather(
@@ -118,6 +117,25 @@ public class WeatherController {
                 dailyWeatherForecastDto.windSpeed,
                 dailyWeatherForecastDto.maxTemperature,
                 dailyWeatherForecastDto.minTemperature);
+    }
+
+    private WeatherForGivenDay getWeatherForGivenDay (WeatherForecastDto weatherForecastDto, LocalDate date){
+        DailyWeatherForecastDto dailyWeatherForecastDto;
+
+        dailyWeatherForecastDto = weatherForecastDto.dailyWeatherForecastDto
+                .stream()
+                .filter(daily -> daily.date.equals(date))
+                .findFirst()
+                .orElseThrow();
+
+        return new WeatherForGivenDay(
+                weatherForecastDto.cityName,
+                dailyWeatherForecastDto.temperature,
+                dailyWeatherForecastDto.date,
+                dailyWeatherForecastDto.windSpeed,
+                dailyWeatherForecastDto.maxTemperature,
+                dailyWeatherForecastDto.minTemperature
+        );
     }
 
     private WeatherForGivenDay getWeatherForDate(WeatherForecastDto weatherForecastDto, LocalDate date) {

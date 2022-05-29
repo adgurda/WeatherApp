@@ -3,6 +3,7 @@ package com.example.WeatherApp;
 import com.example.WeatherApp.controller.DailyWeatherResponse;
 import com.example.WeatherApp.controller.WeatherResponse;
 import com.example.WeatherApp.controller.dto.DailyWeatherForecastDto;
+import com.example.WeatherApp.controller.dto.WeatherForGivenDay;
 import com.example.WeatherApp.controller.dto.WeatherForecastDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,12 @@ class WeatherAppApplicationTests extends IntegrationTest {
         assertThat(response.getBody().dailyWeatherForecastDto).
                 containsExactly(new DailyWeatherForecastDto(
                         10.2F,
-                        LocalDate.parse("2022-05-06"),
+                        LocalDate.of(2022, 5, 21),
                         2.5F,
                         11.2F,
-                        5.7F)
-                );
+                        5.7F
+                ));
+        //działa
     }
 
     @Test
@@ -51,25 +53,23 @@ class WeatherAppApplicationTests extends IntegrationTest {
         ResponseEntity<WeatherForecastDto> response = restTemplate
                 .getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
         assertThat(response.getStatusCodeValue()).isEqualTo(400);
-    }
 
-    //TODO 1.weatherbit odpowiada bledem (500)?
-    //TODO 2.uzupełnić dto o nowe pola ktore beda potrzebne (mail)
-    //TODO 3.stowrzyc endpoint zgodny ze specyfikacja w mail (przyjmuje date)
-    //TODO 4.zwrocic dane pogodowe w danym dniu w Jastarnia (cityname, temperature, windSpeed)
-    //TODO 5.wyciagnac z danego dnia informacje o pogodzie (stream)
+        //działa
+    }
 
     @Test
     void return_daily_daily_weather_by_cityName_and_date() {
-        ResponseEntity<DailyWeatherResponse> response = restTemplate
+        ResponseEntity<WeatherForGivenDay> response = restTemplate
                 .getForEntity("http://localhost:" + port + "/daily-weather?date=2022-05-21&cityName=Jastarnia",
-                        DailyWeatherResponse.class);
+                        WeatherForGivenDay.class);
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(response.getBody().getCityName()).isEqualTo("Jastarnia");
-        assertThat(response.getBody().getMaxTemperature()).isEqualTo(11.2F);
-        assertThat(response.getBody().getMinTemperature()).isEqualTo(5.7F);
-        assertThat(response.getBody().getTemperature()).isEqualTo(10.2F);
-        assertThat(response.getBody().getWindSpeed()).isEqualTo(2.5F);
+        assertThat(response.getBody().date).isEqualTo(LocalDate.of(2022, 5, 21));
+        assertThat(response.getBody().cityName).isEqualTo("Jastarnia");
+        assertThat(response.getBody().temperature).isEqualTo(10.2F);
+        assertThat(response.getBody().minTemperature).isEqualTo(5.7F);
+        assertThat(response.getBody().maxTemperature).isEqualTo(11.2F);
+        assertThat(response.getBody().windSpeed).isEqualTo(2.5F);
+        //działa
     }
 
 }
