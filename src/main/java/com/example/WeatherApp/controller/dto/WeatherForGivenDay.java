@@ -17,12 +17,12 @@ public class WeatherForGivenDay {
     public final float minTemperature;
 
     public WeatherForGivenDay(
-                              @JsonProperty String cityName,
-                              @JsonProperty float temperature,
-                              @JsonProperty LocalDate date,
-                              @JsonProperty float windSpeed,
-                              @JsonProperty float maxTemperature,
-                              @JsonProperty float minTemperature) {
+                              @JsonProperty("city_name") String cityName,
+                              @JsonProperty("temp") float temperature,
+                              @JsonProperty("datetime") LocalDate date,
+                              @JsonProperty("wind_spd") float windSpeed,
+                              @JsonProperty("max_temp") float maxTemperature,
+                              @JsonProperty("min_temp") float minTemperature) {
         this.cityName = cityName;
         this.temperature = temperature;
         this.date = date;
