@@ -8,18 +8,17 @@ import java.util.List;
 @Component
 public class Sort {
     public List<Integer> bubbleSort (List<Integer> list){
-        List<Integer> sortedList = new ArrayList<>();
         Integer temp;
 
        for(int i = 0; i < list.size()-1; i++){
-           if(list.get(i) > list.get(i+1)){
-               temp = list.get(i);
-               list.set(i, list.get(i+1));
-               list.set(i+1, temp);
-               sortedList.add(list.get(i+1));
+           for(int j = 0; j<list.size()-1-i; j++)
+           if(list.get(j).compareTo(list.get(j+1)) > 0){
+               temp = list.get(j);
+               list.set(j, list.get(j+1));
+               list.set(j+1, temp);
            }
        }
-       return sortedList;
+       return list;
     }
 
     @Override
