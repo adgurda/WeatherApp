@@ -87,6 +87,8 @@ public class WeatherController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        //asijdoasjdoiajsodjiaosijdioasjdo
+
 
         List<WeatherForGivenDay> weathersForDateUsingStream = getWeathersForDateUsingStream(weathers, localDate);
 
