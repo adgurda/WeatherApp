@@ -49,7 +49,7 @@ class WeatherAppApplicationTests extends IntegrationTest {
     }
 
     @Test
-    void should_return_bad_request_when_cityName_is_blanc() {
+    void should_return_bad_request_when_cityName_is_blank() {
         ResponseEntity<WeatherForecastDto> response = restTemplate
                 .getForEntity("http://localhost:" + port + "/weather?cityName=", WeatherForecastDto.class);
         assertThat(response.getStatusCodeValue()).isEqualTo(400);
