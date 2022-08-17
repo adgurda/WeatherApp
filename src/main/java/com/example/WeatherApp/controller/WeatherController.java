@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -43,6 +44,8 @@ public class WeatherController {
             weather = weatherClient.getWeather(City.valueOf(city.toUpperCase()));
         } catch (JsonProcessingException e) {
             throw new MappingException("Problem with parsing / generating JSON");
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
         }
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }
@@ -76,6 +79,8 @@ public class WeatherController {
                 try {
                     return weatherClient.getWeather(city);
                 } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
                     throw new RuntimeException(e);
                 }
             }).collect(Collectors.toList());

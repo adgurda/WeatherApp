@@ -3,7 +3,9 @@ package com.example.WeatherApp.controller;
 import com.example.WeatherApp.controller.dto.WeatherForGivenDay;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BestWeatherSelector {
@@ -23,6 +25,12 @@ public class BestWeatherSelector {
         }
 
         return bestWeatherForGivenDay;
+    }
+
+    public WeatherForGivenDay chooseBestWeatherWithStream(List<WeatherForGivenDay> weatherForGivenDays){
+        return weatherForGivenDays.stream()
+                .sorted(Comparator.comparing(WeatherForGivenDay::getWindSpeed).reversed()
+                        .thenComparing(WeatherForGivenDay::getTemperature)).findFirst().orElseThrow();
     }
 
 }
